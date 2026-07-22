@@ -12,8 +12,10 @@ struct ContentView: View {
     @State private var correctAnswer = Int.random(in: 0...2)
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var scoreMessage = ""
     @State private var score = 0
-    
+    @State private var roundCounter = 0
+    @State private var showingFinalScore = false
     var body: some View {
         ZStack{
             RadialGradient(stops: [
@@ -51,7 +53,12 @@ struct ContentView: View {
                 .alert(scoreTitle, isPresented: $showingScore){
                     Button("Continue", action: askQuestion)
                 } message: {
-                    Text("Your score is \(score)")
+                    Text(scoreMessage)
+                }
+                .alert("Game over", isPresented: $showingFinalScore) {
+                    Button("Restart", action: resetGame)
+                } message: {
+                    Text("Your final score was \(score)")
                 }
                 Spacer()
                 Spacer()
@@ -63,8 +70,9 @@ struct ContentView: View {
             }
             .padding()
         }
+
     }
-   
+
     func askQuestion(){
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
@@ -72,13 +80,30 @@ struct ContentView: View {
     
     func flagTapped(_ number:Int){
         if number == correctAnswer{
-            scoreTitle = "Correct"
+            
+            scoreMessage = "Your score is \(score + 1)"
             score += 1
+            askQuestion()
         } else{
             scoreTitle = "Wrong"
+            scoreMessage = "That's the flag of \(countries[number])"
+            showingScore = true
             score -= 1
+         
         }
-        showingScore = true
+        
+        roundCounter += 1
+        
+        if roundCounter == 8 {
+            showingFinalScore = true
+        }
+    }
+    
+    func resetGame(){
+        score = 0
+        roundCounter = 0
+        showingScore = false
+        askQuestion()
     }
 }
 
