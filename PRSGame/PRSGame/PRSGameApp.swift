@@ -1,0 +1,17 @@
+//
+//  PRSGameApp.swift
+//  PRSGame
+//
+//  Created by Yeray Blanco de la Fuente on 26/07/2026.
+//
+
+import SwiftUI
+
+@main
+struct PRSGameApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
