@@ -7,17 +7,20 @@
 
 import SwiftUI
 
+
+
 struct ContentView: View {
+    @State private var title = "SwiftUI"
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
+        NavigationStack {
             Text("Hello, world!")
+                .navigationTitle($title)
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
