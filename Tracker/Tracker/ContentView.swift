@@ -55,8 +55,37 @@ class ActivityStore {
 
 struct ContentView: View {
     @State private var activities = ActivityStore()
+    @State private var ShowingActivity = false
+    @State private var ShowinAddActivity = false
     var body: some View {
+        NavigationStack{
+            Button("Activities"){
+                ShowingActivity = true
+            }
+            Button("Add new activity"){
+                ShowinAddActivity = true
+            }
+            .navigationTitle("Habbit tracker")
+            .sheet(isPresented: $ShowingActivity, content: {ActivityView()})
+            .sheet(isPresented: $ShowinAddActivity, content: {AddActivityView()})
+            .toolbar {
+                Button("entrar", systemImage: "plus"){
+                   // Text("Go to tracker")
+                }
+            }
+        }
+    }
+}
 
+struct ActivityView: View {
+    var body: some View {
+        Text("View for choose Activities")
+    }
+}
+
+struct AddActivityView: View {
+    var body: some View {
+        Text("View for ADD Activities")
     }
 }
 
